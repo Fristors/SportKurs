@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SportBDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="NameSport">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Record" Relationship="Self.FK_Record_NameSport" FromRole="NameSport" ToRole="Record" />
+  </EntityType>
+  <EntityType Name="Record">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="idNameSport" Type="Int32" Nullable="false" />
+    <Property Name="idUnitSport" Type="Int32" Nullable="false" />
+    <Property Name="WorldRecord" Type="Double" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="NameSport" Relationship="Self.FK_Record_NameSport" FromRole="Record" ToRole="NameSport" />
+    <NavigationProperty Name="UnitSport" Relationship="Self.FK_Record_UnitSport" FromRole="Record" ToRole="UnitSport" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TypeUsers">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="Role" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Access" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Users_TypeUsers" FromRole="TypeUsers" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="UnitSport">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="Unit" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Record" Relationship="Self.FK_Record_UnitSport" FromRole="UnitSport" ToRole="Record" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="Login" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="idTypeUsers" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="TypeUsers" Relationship="Self.FK_Users_TypeUsers" FromRole="Users" ToRole="TypeUsers" />
+  </EntityType>
+  <Association Name="FK_Record_NameSport">
+    <End Role="NameSport" Type="Self.NameSport" Multiplicity="1" />
+    <End Role="Record" Type="Self.Record" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NameSport">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Record">
+        <PropertyRef Name="idNameSport" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Record_UnitSport">
+    <End Role="UnitSport" Type="Self.UnitSport" Multiplicity="1" />
+    <End Role="Record" Type="Self.Record" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitSport">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Record">
+        <PropertyRef Name="idUnitSport" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_TypeUsers">
+    <End Role="TypeUsers" Type="Self.TypeUsers" Multiplicity="1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TypeUsers">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="idTypeUsers" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SportBDEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="NameSport" EntityType="Self.NameSport" />
+    <EntitySet Name="Record" EntityType="Self.Record" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="TypeUsers" EntityType="Self.TypeUsers" />
+    <EntitySet Name="UnitSport" EntityType="Self.UnitSport" />
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <AssociationSet Name="FK_Record_NameSport" Association="Self.FK_Record_NameSport">
+      <End Role="NameSport" EntitySet="NameSport" />
+      <End Role="Record" EntitySet="Record" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Record_UnitSport" Association="Self.FK_Record_UnitSport">
+      <End Role="UnitSport" EntitySet="UnitSport" />
+      <End Role="Record" EntitySet="Record" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_TypeUsers" Association="Self.FK_Users_TypeUsers">
+      <End Role="TypeUsers" EntitySet="TypeUsers" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

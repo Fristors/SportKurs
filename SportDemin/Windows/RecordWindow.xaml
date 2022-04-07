@@ -1,0 +1,30 @@
+﻿<Window x:Class="SportDemin.RecordWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SportDemin"
+        mc:Ignorable="d"
+        Title="Рекорды" Height="300" Width="500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <DataGrid AutoGenerateColumns="False" x:Name="SportGrid">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding id}" Header="id" Width="50"/>
+                <DataGridTextColumn Binding="{Binding idNameSport}" Header="Вид Спорта" Width="100"/>
+                <DataGridTextColumn Binding="{Binding idUnitSport}" Header="Ед. Измерения" Width="Auto"/>
+                <DataGridTextColumn Binding="{Binding WorldRecord}" Header="Рекорд" Width="70"/>
+                <DataGridTextColumn Binding="{Binding Date}" Header="Дата" Width="100"/>
+                <DataGridTextColumn Binding="{Binding FullName}" Header="ФИО" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel HorizontalAlignment="Center"  Grid.Row="1" Orientation="Horizontal">
+            <Button x:Name="updateButton" Content="Обновить" Click="UpdateButton_Click" />
+            <Button x:Name="deleteButton" Content="Удалить" Click="DeleteButton_Click" />
+        </StackPanel>
+    </Grid>
+</Window>
